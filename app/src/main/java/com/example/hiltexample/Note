@@ -1,0 +1,87 @@
+DEPENDENCY INJECTION:
+İki modül direkt birbirine bağımlı olmak yerine bir soyut arayüz üzerinden bağımlı olması (daha üst seviyedeki class'lar daha alt seviyedeki class veya modüllere bağımlı olmamalı).
+
+Inversion of Control:
+Bir class'ın kendi işlevi ya da class'ın nesnesinin nasıl oluşturulacağına dair problemlerin, class'ın kendisinden alınarak farklı bir yapıya devredilmesi.
+
+Tightly Coupling:
+Eğer bir sınıf başka bir sınıfın nesnesine ihtiyaç duyuyorsa, bu durumda bu iki nesnenin nasıl oluşturulacağına bağlı olarak bu iki sınıfın birbirine sıkı sıkıya bağımlı mı yoksa gevşek mi olduğuna karar verilir.
+
+Loosely Coupling:
+Bir sınıfın, modülün veya fonksiyonun, sorumlu olduğu işi yapıp yapmadığından emin olma.
+
+Neden Dependency Injection Kullanıyoruz?
+Sınıflar birbirine sıkı sıkıya bağlı olduğunda, o sınıfların bir alt türü daha oluşturulduğunda boilerplate kod yazmak zorunda kalacağız. Bu, fazladan kod yazma ihtiyacını artırır.
+
+Dependency Injection Kaç Farklı Yöntemle Yapılabilir?
+Constructor'dan inject edebilirsin ya da field olarak inject edebilirsin.
+Constructor'dan inject ettiğinde, bağımlılığı dışarıdan constructor ile alırsın.
+Field olarak inject ettiğinde, o field'ı dışarıdan bir fonksiyon yardımıyla ya da public tutarak alabilirsin.
+
+Boilerplate Kod Nedir?
+Genellikle aynı işlevleri yerine getirmek için tekrar eden ve gerekli olan kod parçacıklarıdır.
+
+Hilt ve Koin Farkı:
+Koin: Servis locater pattern kullanır. Nesnelerin oluşturulması ve getirilmesi işlemini runtime'da yapar. Runtime'da yapıldığı için performansı Hilt'e göre daha iyidir.
+Hilt: Buildtime'da çalışır ve build süresini artırdığı için dezavantajlı olabilir. Ancak compile-time safety sağlar.
+TargetSdk ile CompileSdk Farkı:
+TargetSdk: Uygulamanın hangi Android sürümü için optimize edildiğini belirtir.
+CompileSdk: Kodun derlendiği SDK versiyonunu belirtir.
+Hilt ile MainActivity:
+Eğer bir activity, Activity'den miras alıyorsa, Hilt çalışmaz. AppCompatActivity olmalıdır.
+
+Eğer sınıf abstract ise, @AndroidEntryPoint ihtiyacı olmuyor.
+
+SourceCompatibility ve TargetCompatibility:
+SourceCompatibility: Ürettiğimiz kaynak kodların Java 1.8 ile uyumlu olduğunu garanti eder.
+TargetCompatibility: Kodu bytecode'a çevirirken hangi JVM sürümüyle çalışacağını belirtir.
+
+Hilt Kullanımı:
+Kütüphaneleri ayarla.
+Bir app sınıfı oluştur ve üzerine @HiltAndroidApp anotasyonunu ekle.
+Manifest dosyasına gidip, name özelliğine bu App sınıfını ekle.
+
+@Inject Neden Val ya da by Lazy Kullanmıyoruz?
+Çünkü @Inject, ilk başlatmayı zorunlu kılar, bu yüzden val veya by lazy kullanmayız.
+
+Inject Edilemeyen Durumlar:
+Interface'ler
+Değiştirilemeyen kütüphane class'ları
+
+Bind ve Provides Farkı:
+Provides: Constructor'ı olan ama erişemediğimiz kütüphane class'ları için kullanılır.
+Bind: Bir interface'i constructor injection yapamadığımız durumlarda, implementasyon sınıfını parametre olarak veririz. Geri dönüş tipi olarak da o interface'i bekleriz.
+
+Neden Dependency Injection Tool'u Kullanıyoruz?
+Kodlarımızı loosely coupled yaparak, sınıfların birbirine sıkı sıkıya bağımlı olmasını önlemek için kullanıyoruz. Bağımlılıkları kontrol altında tutmak, kodun daha esnek ve kolay test edilebilir olmasını sağlar.
+
+Dependency Inversion Prensibi:
+Üst seviyedeki modüller alt seviyedeki modüllere bağımlı olmamalıdır. Bunun yerine, her iki seviye de soyutlamalara bağımlı olmalıdır. Yani, sınıflar birbirine doğrudan bağımlı olmak yerine, bir arayüz veya soyut sınıf aracılığıyla haberleşmelidir.
+Inversion of Control Prensibi:
+Bir sınıfın, kendi bağımlılıklarını yaratmak yerine bu sorumluluğun başka bir yapıya devredilmesidir. Bu sayede sınıf sadece işlevine odaklanır, bağımlılık yönetimi dışarıdan yapılır.
+
+Cohesion ve Coupling:
+Tight Coupling: Sınıflar birbirine sıkı sıkıya bağımlıdır ve bir sınıf değiştiğinde diğer sınıflar da etkilenir.
+Loose Coupling: Sınıflar birbirine gevşek şekilde bağımlıdır. Sınıflar arasındaki bağımlılık soyutlamalar üzerinden olduğu için değişiklikler diğer sınıfları etkilemez.
+
+Hilt ve Koin Kullanmadan Dependency Injection Yapabilir miyiz?
+Evet, yapılabilir. Ancak DI araçları, bu işlemi kolaylaştırarak kodu daha temiz ve düzenli hale getirir. Ayrıca Hilt ve Koin, bağımlılık yönetimini otomatikleştirir ve runtime ile compile-time safety sağlar.
+
+Hilt Arka Planda Nasıl Çalışır?
+Belirlediğimiz setup'a göre Hilt, arka planda sınıflar ve fonksiyonlar oluşturur. Bu, build süresini artırır ancak avantaj olarak runtime safety sağlar.
+Constructor Injection ve Field Injection Nedir?
+Constructor Injection: Bağımlılıkları, sınıfın constructor'ı aracılığıyla enjekte ederiz. Bu yöntemi kullanmak için @Inject anotasyonunu constructor üzerine koyarız.
+
+Field Injection: Bağımlılıkları, sınıfın bir alanına (field) enjekte ederiz. Bu yöntemi kullanmak için ilgili field'a @Inject anotasyonunu ekleriz.
+
+Bir Sınıfı Constructor ile Inject Etmek İçin Neye İhtiyacım Var?
+Constructor'a @Inject anotasyonu koyacaksın ve bu sınıfı kullanacağın yerde de @Inject anotasyonunu çağıracaksın.
+Activity'de @AndroidEntryPoint eklememiz gerekir. Ayrıca, Application sınıfına @HiltAndroidApp koyup, bu sınıfı manifest dosyasına eklemeliyiz.
+
+Interface Inject Etmek İçin Ne Yapmalıyım?
+Interface'lerin constructor'ı olmadığı için, onlara Hilt modülü yazmamız gerekir. Modül tanımlarken @Module ve @InstallIn anotasyonlarını kullanarak modülün nerede çalışacağını belirtiriz. İçine bir abstract class yazarız ve bu class'ta abstract bir fonksiyon aracılığıyla interface'i implement eden sınıfı enjekte ederiz.
+
+@Provide Anotasyonu Nedir?
+Eğer bir sınıfa erişemiyorsak ve bu sınıf bir kütüphane sınıfıysa, @Provide anotasyonunu kullanarak bir fonksiyon içerisinde o sınıfın nasıl üretileceğini belirtiriz. Bu sayede, sınıfı injection ile kullanabiliriz.
+Qualifier Nedir?
+Aynı değeri bekleyen iki farklı fonksiyon yazıyorsak, hangi fonksiyonun kullanılacağını belirtmek için Qualifier kullanırız. Bu durumda @Inject ederken, hangi Qualifier'a göre inject edeceğimizi belirtmemiz gerekir.
